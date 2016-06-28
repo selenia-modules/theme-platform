@@ -1,0 +1,33 @@
+{
+  "name": "selenia-modules/theme-gentelella",
+  "description": "A theme for Selenia based on the Open Source Gentelella Bootstrap 3 Admin Template",
+  "type": "electro-plugin",
+  "keywords": [
+    "plugin",
+    "electro",
+    "selenia"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Impactwave",
+      "email": "impactwave@impactwave.com",
+      "homepage": "http://impactwave.com"
+    },
+    {
+      "name": "Cláudio Silva",
+      "email": "claudio.silva@impactwave.com"
+    }
+  ],
+  "homepage": "https://github.com/selenia-modules/theme-gentelella",
+  "require": {
+    "php": ">=5.6.0",
+    "electro/installers": "^1.0.0",
+    "electro-modules/matisse": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Selenia\\Themes\\Gentelella\\": "src/"
+    }
+  }
+}

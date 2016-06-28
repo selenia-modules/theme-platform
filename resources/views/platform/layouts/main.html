@@ -1,0 +1,189 @@
+<Import services="app navigation session"/>
+
+<Content of="master">
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="{app.homeURI}" class="site_title"><span>{app.appName}</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <br>
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <MainMenu class="nav side-menu" id="side-menu" expandIcon="fa.fa-chevron-down"
+                        menu={sideMenu} excludeRoot=false>
+                  <SectionTemplate>
+                    <div class="menu_section">
+                      <h3>{header}</h3>
+                      {menu|*}
+                    </div>
+                  </SectionTemplate>
+              </MainMenu>
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+
+              <ul class="nav navbar-nav navbar-right">
+                  <LinkDropdown link={navigation.settings} title={session.user.realName} class="user-profile"
+                                iconClass="pull-right">
+                    <Image>
+                      <img src="https://www.gravatar.com/avatar/30b1d943193fa977972243ee8247d8cb?s=29" alt="">
+                    </Image>
+                  </LinkDropdown>
+
+                <li role="presentation" class="dropdown">
+                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">6</span>
+                  </a>
+                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                    <li>
+                      <a>
+                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="text-center">
+                        <a>
+                          <strong>See All Alerts</strong>
+                          <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left1 col-sm-8 col-xs-12">
+                <h3>{navigation.currentLink.title}</h3>
+                <NavigationPath navigation={navigation}>
+                  <Prepend>
+                    <i class="fa fa-home"></i>
+                  </Prepend>
+                </NavigationPath>
+              </div>
+
+              <div class="title_right1 col-sm-4 col-sm-12">
+                <div class="form-group pull-right top_search">
+                  {#topTools|*}
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                {#main|*}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <Include scripts/>
+  </body>
+</Content>
+
+<Include view="platform/layouts/master.html"/>
