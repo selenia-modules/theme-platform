@@ -15,16 +15,18 @@
             <br>
 
             <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <MainMenu class="nav side-menu" id="side-menu" expandIcon="fa.fa-chevron-down"
-                        menu={sideMenu} excludeRoot=false>
+            <div >
+              <SideBarMenu id="sidebar-menu" class="main_menu_side hidden-print main_menu"
+                           expandIcon="fa.fa-chevron-down" listClass="nav.side-menu"
+                           sectionClass="menu_section"
+                           menu={navigation.app_home} excludeRoot>
                   <SectionTemplate>
                     <div class="menu_section">
                       <h3>{header}</h3>
                       {menu|*}
                     </div>
                   </SectionTemplate>
-              </MainMenu>
+              </SideBarMenu>
             </div>
             <!-- /sidebar menu -->
 
@@ -57,7 +59,7 @@
 
 
               <ul class="nav navbar-nav navbar-right">
-                  <LinkDropdown link={navigation.settings} title={session.user.realName} class="user-profile"
+                  <LinkDropdown link={navigation.userMenu} title={session.user.realName} class="user-profile"
                                 iconClass="pull-right">
                     <Image>
                       <img src="https://www.gravatar.com/avatar/30b1d943193fa977972243ee8247d8cb?s=29" alt="">

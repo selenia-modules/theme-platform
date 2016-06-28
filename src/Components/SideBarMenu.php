@@ -6,8 +6,9 @@ use Electro\Plugins\Matisse\Components\Base\HtmlComponent;
 use Electro\Plugins\Matisse\Components\Internal\Metadata;
 use Electro\Plugins\Matisse\Properties\Base\HtmlComponentProperties;
 use Electro\Plugins\Matisse\Properties\TypeSystem\type;
+use PhpKit\Flow\Flow;
 
-class MainMenuProperties extends HtmlComponentProperties
+class SideBarMenuProperties extends HtmlComponentProperties
 {
   /**
    * @var int
@@ -16,34 +17,41 @@ class MainMenuProperties extends HtmlComponentProperties
   /**
    * @var bool
    */
-  public $excludeRoot = false;
+  public $excludeDividers = true;
   /**
    * @var bool
    */
-  public $excludeDividers = true;
+  public $excludeRoot = false;
   /**
    * @var string
    */
   public $expandIcon = '';
   /**
+   * @var string
+   */
+  public $listClass = '';
+  /**
    * @var NavigationLinkInterface[]|\Traversable
    */
   public $menu = type::data;
+  /**
+   * @var string
+   */
+  public $sectionClass = '';
   /**
    * @var Metadata
    */
   public $sectionTemplate = type::content;
 }
 
-class MainMenu extends HtmlComponent
+class SideBarMenu extends HtmlComponent
 {
-  const propertiesClass = MainMenuProperties::class;
+  const propertiesClass = SideBarMenuProperties::class;
 
-  /** @var MainMenuProperties */
+  /** @var SideBarMenuProperties */
   public $props;
 
-  protected $containerTag = 'ul';
-  protected $depthClass   = ['', 'child_menu', 'child_menu', 'child_menu', 'child_menu'];
+  protected $depthClass = ['', 'child_menu', 'child_menu', 'child_menu', 'child_menu'];
 
   protected function init ()
   {
@@ -71,24 +79,36 @@ class MainMenu extends HtmlComponent
         if (is_array ($link))
           $link = $link[0];
         // Exclude hidden links and menu separators.
-        if (!$link->isActuallyVisible () || ($link->isGroup () && $link->title () == '-')) return null;
-        $children = $link->getMenu ();
-        $children->rewind ();
-        $active  = $link->isActive () ? '.active' : '';
-        $sub     = $children->valid () ? '.sub' : '';
-        $current = $link->isSelected () ? '.current' : '';
-        $url     = $link->isGroup () && !isset ($link->defaultURI) ? null : $link->url ();
-        $header  = $link->isGroup () && $link->title () != '-' ? '.header' : '';
+        if (!$link->isActuallyVisible ()) return null;
         return [
-          h ("li$active$sub$current$header", [
-            h ("a$active", [
-              'href' => $url,
-            ], [
-              when ($link->icon (), h ('i', ['class' => $link->icon ()])),
-              $link->title (),
-              when (isset($xi) && $sub, h ("span.$xi")),
-            ]),
-            when ($sub, $this->renderMenuItem ($children, $xi, false /*$link->matches*/)),
+          h ('.' . $this->props->sectionClass, [
+            h ('h3', $link->title ()),
+            h ('ul.' . $this->props->listClass,
+            Flow::from ($link->getMenu ())->map (
+              function (NavigationLinkInterface $link, $xi) {
+                // Exclude hidden links and menu separators.
+                if (!$link->isActuallyVisible () || ($link->isGroup () && $link->title () == '-')) return null;
+                $children = $link->getMenu ();
+                $children->rewind ();
+                $active  = $link->isActive () ? '.active' : '';
+                $sub     = $children->valid () ? '.sub' : '';
+                $current = $link->isSelected () ? '.current' : '';
+                $url     = $link->isGroup () && !isset ($link->defaultURI) ? null : $link->url ();
+                $header  = $link->isGroup () && $link->title () != '-' ? '.header' : '';
+                return [
+                  h ("li$active$sub$current$header", [
+                    h ("a$active", [
+                      'href' => $url,
+                    ], [
+                      when ($link->icon (), h ('i', ['class' => $link->icon ()])),
+                      $link->title (),
+                      when (isset($xi) && $sub, h ("span.$xi")),
+                    ]),
+                    when ($sub, $this->renderMenuItem ($children, $xi, false /*$link->matches*/)),
+                  ]),
+                ];
+              })->all()
+            )
           ]),
         ];
       })
@@ -102,7 +122,9 @@ class MainMenu extends HtmlComponent
       return null;
     return h ('ul.nav.collapse.' . $this->depthClass[$depth],
       map ($links, function (NavigationLinkInterface $link) use ($xi, $depth, $parentIsActive) {
-        if (!$link->isActuallyVisible () || ($link->isGroup () && $link->title () == '-' && $this->props->excludeDividers)) return null;
+        if (!$link->isActuallyVisible () ||
+            ($link->isGroup () && $link->title () == '-' && $this->props->excludeDividers)
+        ) return null;
         $children = $link->getMenu ();
         $children->rewind ();
         $active        = $link->isActive () ? '.active' : '';
