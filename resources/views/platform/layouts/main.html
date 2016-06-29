@@ -15,17 +15,20 @@
             <br>
 
             <!-- sidebar menu -->
-            <div >
-              <SideBarMenu id="sidebar-menu" class="main_menu_side hidden-print main_menu"
-                           expandIcon="fa.fa-chevron-down" listClass="nav.side-menu"
+            <div>
+              <SideBarMenu id="sidebar-menu"
+                           class="main_menu_side hidden-print main_menu"
+                           expandIcon="fa.fa-chevron-down"
+                           listClass="nav.side-menu"
                            sectionClass="menu_section"
-                           menu={navigation.app_home} excludeRoot>
-                  <SectionTemplate>
-                    <div class="menu_section">
-                      <h3>{header}</h3>
-                      {menu|*}
-                    </div>
-                  </SectionTemplate>
+                           menu={navigation.app_home}
+                           excludeRoot>
+                <SectionTemplate>
+                  <div class="menu_section">
+                    <h3>{header}</h3>
+                    {menu|*}
+                  </div>
+                </SectionTemplate>
               </SideBarMenu>
             </div>
             <!-- /sidebar menu -->
@@ -57,24 +60,27 @@
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
               </div>
 
-
               <ul class="nav navbar-nav navbar-right">
-                  <LinkDropdown link={navigation.userMenu} title={session.user.realName} class="user-profile"
-                                iconClass="pull-right">
-                    <Image>
-                      <img src="https://www.gravatar.com/avatar/30b1d943193fa977972243ee8247d8cb?s=29" alt="">
-                    </Image>
-                  </LinkDropdown>
+                <LinkDropdown link={navigation.userMenu}
+                              title={session.user.realName}
+                              class="user-profile"
+                              iconClass="pull-right">
+                  <Image>
+                    <img src="https://www.gravatar.com/avatar/30b1d943193fa977972243ee8247d8cb?s=29" alt="">
+                  </Image>
+                </LinkDropdown>
 
                 <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
+                  <a href="javascript:;"
+                     class="dropdown-toggle info-number"
+                     data-toggle="dropdown"
+                     aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
                   </a>
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
-                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image" /></span>
+                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image"/></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -86,7 +92,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image" /></span>
+                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image"/></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -98,7 +104,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image" /></span>
+                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image"/></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -110,7 +116,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image" /></span>
+                        <span class="image"><img src="modules/selenia/platform/i/bw1.png" alt="Profile Image"/></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -123,8 +129,7 @@
                     <li>
                       <div class="text-center">
                         <a>
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
+                          <strong>See All Alerts</strong> <i class="fa fa-angle-right"></i>
                         </a>
                       </div>
                     </li>
@@ -166,7 +171,7 @@
 
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
-                {#main|*}
+                {#statusMessage|*} {#main|*}
               </div>
             </div>
           </div>
@@ -176,7 +181,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            {adminSettings.footer|*}
           </div>
           <div class="clearfix"></div>
         </footer>

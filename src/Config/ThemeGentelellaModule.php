@@ -15,7 +15,10 @@ class ThemeGentelellaModule implements ModuleInterface
       ->provideMacros ()
       ->registerComponents ([
         'SideBarMenu' => SideBarMenu::class,
-      ]);
+      ])
+      // DO NOT IMPORT THE FOLLOWING NAMESPACE!
+      ->registerControllersNamespace (\Selenia\Platform\Components::class, 'platform')
+    ;
   }
 
 }
