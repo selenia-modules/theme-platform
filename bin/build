@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-which sass > /dev/null
-if [ $? -ne 0 ] ; then
-  echo -e "\nInstalling SASS..."
+function install ()
+{
+  echo -e "\nInstalling build tools..."
   sudo gem install sass || exit $?
-fi
+}
+
+which sass > /dev/null || install
 
 if [ "$1" == "--watch" ]; then
   echo

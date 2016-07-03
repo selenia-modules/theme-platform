@@ -85,13 +85,19 @@ class SideBarMenu extends HtmlComponent
             h ('h3', $link->title ()),
             h ('ul.' . $this->props->listClass,
             Flow::from ($link->getMenu ())->map (
-              function (NavigationLinkInterface $link, $xi) {
+              function (NavigationLinkInterface $link) use ($xi) {
                 // Exclude hidden links and menu separators.
                 if (!$link->isActuallyVisible () || ($link->isGroup () && $link->title () == '-')) return null;
                 $children = $link->getMenu ();
+                $sub = '';
+                /** @var NavigationLinkInterface $child */
+                foreach ($children as $child)
+                  if ($child->isActuallyVisible ()) {
+                    $sub = '.sub';
+                    break;
+                  }
                 $children->rewind ();
                 $active  = $link->isActive () ? '.active' : '';
-                $sub     = $children->valid () ? '.sub' : '';
                 $current = $link->isSelected () ? '.current' : '';
                 $url     = $link->isGroup () && !isset ($link->defaultURI) ? null : $link->url ();
                 $header  = $link->isGroup () && $link->title () != '-' ? '.header' : '';
@@ -108,7 +114,7 @@ class SideBarMenu extends HtmlComponent
                   ]),
                 ];
               })->all()
-            )
+            ),
           ]),
         ];
       })
@@ -126,9 +132,15 @@ class SideBarMenu extends HtmlComponent
             ($link->isGroup () && $link->title () == '-' && $this->props->excludeDividers)
         ) return null;
         $children = $link->getMenu ();
+        $sub = '';
+        /** @var NavigationLinkInterface $child */
+        foreach ($children as $child)
+          if ($child->isActuallyVisible ()) {
+            $sub = '.sub';
+            break;
+          }
         $children->rewind ();
         $active        = $link->isActive () ? '.active' : '';
-        $sub           = $children->valid () ? '.sub' : '';
         $current       = $link->isSelected () ? '.current' : '';
         $disabled      = !$link->isActuallyEnabled ();
         $url           =
