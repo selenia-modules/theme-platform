@@ -37,6 +37,7 @@
         </div>
 
         <!-- top navigation -->
+        <!--
         <div class="top_nav">
           <div class="nav_menu">
             <nav>
@@ -133,20 +134,31 @@
                 <h3>{navigation.currentLink.title}</h3>
                 <NavigationPath navigation={navigation}>
                   <Prepend>
-                    <i class="fa fa-home"></i>
+                    <i class="ion-home"></i>&nbsp;
                   </Prepend>
                 </NavigationPath>
               </div>
 
               <div class="title_right1 col-sm-4 col-sm-12">
-                <div class="form-group pull-right top_search">
+                <div class="form-group pull-right">
                   {#topTools|*}
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-                    </span>
-                  </div>
+                  <!--<div class="input-group">-->
+                    <!--<input type="text" class="form-control" placeholder="Search for...">-->
+                    <!--<span class="input-group-btn">-->
+                      <!--<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>-->
+                    <!--</span>-->
+                  <!--</div>-->
+
+                  <ul class="nav navbar-nav navbar-right">
+                    <LinkDropdown link={navigation.userMenu}
+                                  title={session.user.realName}
+                                  class="user-profile"
+                                  iconClass="pull-right">
+                      <Image>
+                        <img src="https://www.gravatar.com/avatar/30b1d943193fa977972243ee8247d8cb?s=29" alt="">
+                      </Image>
+                    </LinkDropdown>
+                  </ul>
                 </div>
               </div>
             </div>
