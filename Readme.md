@@ -1,13 +1,13 @@
-# Gentelella Theme
+# Platform Theme
 
-> A theme for Selenia based on the Open Source Gentelella Bootstrap 3 Admin Template.
+> The default theme for Selenia.
 
 ## Installation
 
 To install this plugin on your application, using the terminal, `cd` to your app's directory and type:
 
 ```bash
-workman module:install-plugin selenia-modules/theme-gentelella
+workman module:install-plugin selenia-modules/theme-platform
 ```
 
 > For correct operation, do not install this package directly with Composer.

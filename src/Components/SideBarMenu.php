@@ -1,5 +1,5 @@
 <?php
-namespace Selenia\Themes\Gentelella\Components;
+namespace Selenia\Themes\Platform\Components;
 
 use Electro\Interfaces\Navigation\NavigationLinkInterface;
 use Electro\Plugins\Matisse\Components\Base\HtmlComponent;
@@ -7,6 +7,7 @@ use Electro\Plugins\Matisse\Components\Internal\Metadata;
 use Electro\Plugins\Matisse\Properties\Base\HtmlComponentProperties;
 use Electro\Plugins\Matisse\Properties\TypeSystem\type;
 use PhpKit\Flow\Flow;
+use Selenia\Themes\Platform\Config\ThemePlatformModule;
 
 class SideBarMenuProperties extends HtmlComponentProperties
 {
@@ -56,8 +57,8 @@ class SideBarMenu extends HtmlComponent
   protected function init ()
   {
     parent::init ();
-//    $this->context->getAssetsService ()->addStylesheet ('modules/electro-modules/matisse-components/css/metisMenu.css');
-//    $this->context->getAssetsService ()->addScript ('modules/electro-modules/matisse-components/js/metisMenu.js');
+    $this->context->getAssetsService ()->addStylesheet (ThemePlatformModule::PUBLIC_DIR . '/dist/components/sideBarMenu.css');
+    $this->context->getAssetsService ()->addScript (ThemePlatformModule::PUBLIC_DIR . '/js/components/sideBarMenu.js');
   }
 
   protected function render ()

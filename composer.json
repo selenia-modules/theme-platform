@@ -1,6 +1,6 @@
 {
-  "name": "selenia-modules/theme-gentelella",
-  "description": "A theme for Selenia based on the Open Source Gentelella Bootstrap 3 Admin Template",
+  "name": "selenia-modules/theme-platform",
+  "description": "The default theme for Selenia",
   "type": "electro-plugin",
   "keywords": [
     "plugin",
@@ -19,7 +19,7 @@
       "email": "claudio.silva@impactwave.com"
     }
   ],
-  "homepage": "https://github.com/selenia-modules/theme-gentelella",
+  "homepage": "https://github.com/selenia-modules/theme-platform",
   "require": {
     "php": ">=5.6.0",
     "electro/installers": "^1.0.0",
@@ -27,7 +27,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Selenia\\Themes\\Gentelella\\": "src/"
+      "Selenia\\Themes\\Platform\\": "src/"
     }
   }
 }

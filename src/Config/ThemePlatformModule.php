@@ -1,18 +1,20 @@
 <?php
-namespace Selenia\Themes\Gentelella\Config;
+namespace Selenia\Themes\Platform\Config;
 
 use Electro\Core\Assembly\Services\ModuleServices;
 use Electro\Interfaces\ModuleInterface;
 use Selenia\Themes\Gentelella\Components\SideBarMenu;
 
-class ThemeGentelellaModule implements ModuleInterface
+class ThemePlatformModule implements ModuleInterface
 {
+  const PUBLIC_DIR = 'modules/selenia-modules/theme-platform';
+
   function configure (ModuleServices $module)
   {
     $module
-      ->publishPublicDirAs ('modules/selenia-modules/theme-gentelella')
+      ->publishPublicDirAs (PUBLIC_DIR)
       ->provideViews ()
-      ->provideMacros ()
+//      ->provideMacros ()
       ->registerComponents ([
         'SideBarMenu' => SideBarMenu::class,
       ])
