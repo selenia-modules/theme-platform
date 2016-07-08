@@ -3,7 +3,7 @@ namespace Selenia\Themes\Platform\Config;
 
 use Electro\Core\Assembly\Services\ModuleServices;
 use Electro\Interfaces\ModuleInterface;
-use Selenia\Themes\Gentelella\Components\SideBarMenu;
+use Selenia\Themes\Platform\Components\SideBarMenu;
 
 class ThemePlatformModule implements ModuleInterface
 {
@@ -12,7 +12,7 @@ class ThemePlatformModule implements ModuleInterface
   function configure (ModuleServices $module)
   {
     $module
-      ->publishPublicDirAs (PUBLIC_DIR)
+      ->publishPublicDirAs (self::PUBLIC_DIR)
       ->provideViews ()
 //      ->provideMacros ()
       ->registerComponents ([
