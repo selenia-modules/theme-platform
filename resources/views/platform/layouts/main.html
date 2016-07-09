@@ -2,93 +2,81 @@
 
 <Content of="master">
   <body class="nav-md">
-    <div class="grid">
-      <div class="row">
-        <div class="left_col col-xs-3">
-          <div class="box">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="{app.homeURI}" class="site_title"><span>{app.appName}</span></a>
-            </div>
+    <div class="main grid-frame">
 
-            <div class="clearfix"></div>
-
-            <br>
-
-            <!-- sidebar menu -->
-            <div>
-              <SideBarMenu id="sidebar-menu"
-                           class="main_menu_side hidden-print main_menu"
-                           expandIcon="fa.fa-chevron-down"
-                           listClass="nav.side-menu"
-                           sectionClass="menu_section"
-                           menu={navigation.app_home}
-                           excludeRoot>
-                <SectionTemplate>
-                  <div class="menu_section">
-                    <h3>{header}</h3>
-                    {menu|*}
-                  </div>
-                </SectionTemplate>
-              </SideBarMenu>
-            </div>
-            <!-- /sidebar menu -->
+      <div class="left_col grid-block shrink">
+        <div class="vertical grid-block">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="{app.homeURI}" class="site_title"><span>{app.appName}</span></a>
           </div>
+          <div class="clearfix"></div>
+          <br>
+          <!-- sidebar menu -->
+          <SideBarMenu id="sidebar-menu"
+                       class="main_menu_side hidden-print main_menu"
+                       expandIcon="fa.fa-chevron-down"
+                       listClass="nav.side-menu"
+                       sectionClass="menu_section"
+                       menu={navigation.app_home}
+                       excludeRoot>
+            <SectionTemplate>
+              <div class="menu_section">
+                <h3>{header}</h3>
+                {menu|*}
+              </div>
+            </SectionTemplate>
+          </SideBarMenu>
+          <!-- /sidebar menu -->
         </div>
-
-        <!-- page content -->
-        <div class="right_col col-xs-9">
-          <div class="box">
-            <div class="page-title">
-              <div class="title_left1 col-sm-8 col-xs-12">
-                <h3>{navigation.currentLink.title}</h3>
-                <NavigationPath navigation={navigation}>
-                  <Prepend>
-                    <i class="ion-home"></i>&nbsp;
-                  </Prepend>
-                </NavigationPath>
-              </div>
-
-              <div class="title_right1 col-sm-4 col-sm-12">
-                <div class="form-group pull-right">
-                  {#topTools|*}
-
-                  <ul class="nav navbar-nav navbar-right">
-                    <LinkDropdown link={navigation.userMenu}
-                                  title={session.user.realName}
-                                  class="user-profile"
-                                  iconClass="pull-right">
-                      <Image>
-                        <img src="https://www.gravatar.com/avatar/30b1d943193fa977972243ee8247d8cb?s=29" alt="">
-                      </Image>
-                    </LinkDropdown>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="clearfix"></div>
-
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                {#statusMessage|*} {#main|*}
-              </div>
-            </div>
-
-            <!-- footer content -->
-            <footer>
-              <div class="pull-right">
-                {adminSettings.footer|*}
-              </div>
-              <div class="clearfix"></div>
-            </footer>
-            <!-- /footer content -->
-
-          </div>
-        </div>
-        <!-- /page content -->
-
       </div>
-    </div>
+
+      <!-- page content -->
+      <div class="right_col vertical grid-block">
+
+        <div class="page-title grid-block shrink">
+
+          <div class="title_left1 grid-content">
+            <h3>{navigation.currentLink.title}</h3>
+            <NavigationPath navigation={navigation}>
+              <Prepend>
+                <i class="ion-home"></i>&nbsp;
+              </Prepend>
+            </NavigationPath>
+          </div>
+
+          <div class="title_right1 grid-content align-right shrink">
+            <div class="form-group">
+              {#topTools|*}
+
+              <ul class="nav navbar-nav navbar-right">
+                <LinkDropdown link={navigation.userMenu}
+                              title={session.user.realName}
+                              class="user-profile"
+                              iconClass="pull-right">
+                  <Image>
+                    <img src="https://www.gravatar.com/avatar/30b1d943193fa977972243ee8247d8cb?s=29" alt="">
+                  </Image>
+                </LinkDropdown>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="content" class="grid-block">
+          {#statusMessage|*} {#main|*}
+        </div>
+
+        <!-- footer content -->
+        <footer class="grid-block align-right shrink">
+          <div class="text-right">
+            {adminSettings.footer|*}
+          </div>
+        </footer>
+        <!-- /footer content -->
+
+      </div><!-- /right-col -->
+
+    </div><!-- /main.grid -->
 
     <Include scripts/>
   </body>
