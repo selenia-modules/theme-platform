@@ -1,0 +1,61 @@
+@import '../@{bootstrap-path}/variables.less';
+
+// These values should match the corresponding ones on _global.scss
+@font-size-base: 16px;
+//** Unit-less `line-height` for use in components like buttons.
+@line-height-base: 1.5;
+
+@text-color:            #5a738e;
+
+@brand-primary:         #1C84C6;
+@brand-success:         #1ab394;
+@brand-info:            #23C6C8;
+@brand-warning:         #F8AC59;
+@brand-danger:          #ED5565;
+@brand-active:          #1ABB9C;
+
+
+@breadcrumb-padding-vertical:   15px 0;
+@breadcrumb-padding-horizontal: 0;
+//** Breadcrumb background color
+@breadcrumb-bg:                 inherit;
+//** Breadcrumb text color
+@breadcrumb-color:              #DDD;
+//** Text color of current page in the breadcrumb
+@breadcrumb-active-color:       @brand-success;
+//** Textual separator for between breadcrumb elements
+@breadcrumb-separator:          "▸";
+
+
+@btn-font-weight:                normal;
+
+@btn-default-color:              #333;
+@btn-default-bg:                 #fff;
+@btn-default-border:             #ccc;
+
+@btn-primary-color:              @brand-primary;
+@btn-primary-bg:                 transparent;
+@btn-primary-border:             lighten(@btn-primary-color, 5%);
+
+@btn-success-color:              @brand-success;
+@btn-success-bg:                 transparent;
+@btn-success-border:             lighten(@btn-success-color, 5%);
+
+@btn-info-color:                 @brand-info;
+@btn-info-bg:                    transparent;
+@btn-info-border:                lighten(@btn-info-color, 5%);
+
+@btn-warning-color:              @brand-warning;
+@btn-warning-bg:                 transparent;
+@btn-warning-border:             lighten(@btn-warning-color, 5%);
+
+@btn-danger-color:               @brand-danger;
+@btn-danger-bg:                  transparent;
+@btn-danger-border:              lighten(@btn-danger-color, 5%);
+
+@btn-link-disabled-color:        @gray-light;
+
+// Allows for customizing button radius independently from global border radius
+@btn-border-radius-base:         16px;
+@btn-border-radius-large:        @border-radius-large;
+@btn-border-radius-small:        @border-radius-small;

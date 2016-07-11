@@ -1,0 +1,56 @@
+<Import services="navigation session"/>
+
+<div class="top-bar grid-block shrink">
+
+  <div class="title_left1 grid-content">
+    <h3>{navigation.currentLink.title}</h3>
+    <NavigationPath navigation={navigation}>
+      <Prepend>
+        <i class="ion-home"></i>&nbsp;
+      </Prepend>
+    </NavigationPath>
+  </div>
+
+  <div class="title_right1 grid-content align-right shrink">
+    <div class="form-group">
+      {#topTools|*}
+
+      <ul class="nav navbar-nav navbar-right">
+        <LinkDropdown link={navigation.userMenu}
+                      title={session.user.realName}
+                      class="user-profile"
+                      iconClass="pull-right">
+          <Image>
+            <img src="https://www.gravatar.com/avatar/30b1d943193fa977972243ee8247d8cb?s=29" alt="">
+          </Image>
+        </LinkDropdown>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="top-nav-bar grid-block shrink">
+
+  <ul id="mainTabs" class="nav nav-pills grid-content">
+    <li class="active">
+      <a>Freguesias</a>
+    </li>
+    <li>
+      <a>Actividade</a>
+    </li>
+    <li>
+      <a>Histórico</a>
+    </li>
+    <li>
+      <a>Permissões</a>
+    </li>
+  </ul>
+
+  <div class="action-bar grid-content align-right shrink">
+    <ButtonNew/>
+    <ButtonDelete/>
+    <ButtonCancel/>
+  </div>
+
+</div>

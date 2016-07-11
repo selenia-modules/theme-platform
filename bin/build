@@ -3,15 +3,54 @@
 function install ()
 {
   echo -e "\nInstalling build tools..."
-  sudo gem install sass || exit $?
+  which sass > /dev/null || sudo gem install sass || exit $?
+  which lessc > /dev/null || sudo npm install -g less less-plugin-clean-css || exit $?
+  which sane > /dev/null || sudo npm install -g sane || exit $?
+  echo -e "\nInstallation complete."
 }
-
 which sass > /dev/null || install
+which lessc > /dev/null || install
+which sane > /dev/null || install
 
-if [ "$1" == "--watch" ]; then
-  echo
-  sass --watch resources/assets/scss:public/dist --style compressed -E "UTF-8" && echo -e "\nDone.\n"
-else
-echo -e "Note: when developing, you can compile automatically using the --watch flag.\n\nBuilding..."
-sass resources/assets/scss/components/sideBarMenu.scss public/dist/components/sideBarMenu.css --style compressed -E "UTF-8" && echo -e "Done.\n"
+if [ -z "$1" ]; then
+  echo "Syntax:
+    $0 [--all] [--watch]
+
+    --all     Also (re)build customized Bootstrap
+    --watch   Automatically rebuild when changes are detected
+"
+  exit 1
 fi
+
+echo -e "\nBuilding...\n"
+mkdir -p public/dist/components 2> /dev/null
+
+# CUSTOM BOOTSTRAP BUILD
+if [ "$1" == "--all" -o "$2" == "--all" ]; then
+  echo -e "\t◆ Customized Bootstrap build"
+  lessc -s resources/assets/less/bootstrap.less --source-map=public/dist/bootstrap.map --clean-css="--s1" public/dist/bootstrap.css
+fi
+
+if [ "$1" == "--watch" -o "$2" == "--watch" ]; then
+  echo -e "\nPress Enter/Return to stop.\n"
+  sass resources/assets/scss/components/sideBarMenu.scss public/dist/components/sideBarMenu.css --style compressed -E "UTF-8" &
+  P1=$!
+  sane 'echo "Building LESS...";\
+lessc -s resources/assets/less/theme.less --source-map=public/dist/theme.map --clean-css="--s1" public/dist/theme.css &&\
+echo "Done.\n"' resources/assets/less --glob='**/*.less' &
+  P2=$!
+  read
+  echo "Killing processes $P1 and $P2...";
+  kill $P1
+  kill $P2
+  echo -e "\nDone.\n"
+  exit 0
+else
+  echo -e "\t◆ SASS stylesheets"
+  sass resources/assets/scss/components/sideBarMenu.scss public/dist/components/sideBarMenu.css --style compressed -E "UTF-8" &&\
+  echo -e "\t◆ LESS stylesheets"
+  lessc -s resources/assets/less/theme.less --source-map=public/dist/theme.map --clean-css="--s1" public/dist/theme.css &&\
+  echo -e "\nDone.\n" &&\
+  exit 0
+fi
+exit $?
