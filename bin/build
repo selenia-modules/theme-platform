@@ -1,56 +1,135 @@
 #!/usr/bin/env bash
 
-function install ()
+############################################################
+# TASKS
+############################################################
+
+build_sass ()
 {
-  echo -e "\nInstalling build tools..."
-  which sass > /dev/null || sudo gem install sass || exit $?
-  which lessc > /dev/null || sudo npm install -g less less-plugin-clean-css || exit $?
-  which sane > /dev/null || sudo npm install -g sane || exit $?
-  echo -e "\nInstallation complete."
+  printf "Building SASS stylesheets\n"
+  sass --update resources/assets/sass:public/dist --style compressed -E "UTF-8"
 }
-which sass > /dev/null || install
-which lessc > /dev/null || install
-which sane > /dev/null || install
+
+build_less ()
+{
+  printf "Building LESS stylesheets\n"
+  lessc -s resources/assets/less/theme.less --source-map=public/dist/theme.map --clean-css="--s1" public/dist/theme.css
+}
+
+build_3rd_party ()
+{
+  printf "Building 3rd party libraries\n"
+  # CUSTOM BOOTSTRAP BUILD
+  lessc -s resources/assets/less/bootstrap.less --source-map=public/dist/bootstrap.map --clean-css="--s1" public/dist/bootstrap.css
+}
+
+############################################################
+# WATCH
+############################################################
+
+watch ()
+{
+  export -f build_sass build_less
+
+  background_run "sane build_sass resources/assets/sass --glob=**/*.scss"
+  background_run "sane build_less resources/assets/less --glob=**/*.less"
+}
+
+############################################################
+# INIT
+############################################################
+
+init ()
+{
+  mkdir -p public/dist/components 2> /dev/null
+  return 0
+}
+
+############################################################
+# AUTOMATIC INSTALLATION
+############################################################
+
+install_tools ()
+{
+  printf "\nWe need to install some build tools.\nPress Enter to continue or Ctrl+C to abort "
+  read
+  which sass > /dev/null || sudo gem install sass || fail
+  which lessc > /dev/null || sudo npm install -g less less-plugin-clean-css || fail
+  which sane > /dev/null || sudo npm install -g sane || fail
+  which bower > /dev/null || sudo npm install -g bower || fail
+  printf "\nInstallation complete.\n"
+}
+
+install_3rd_party ()
+{
+  printf "\nInstalling required Bower components...\n\n"
+  bower install
+}
+
+which sass > /dev/null || install_tools
+which lessc > /dev/null || install_tools
+which sane > /dev/null || install_tools
+which bower > /dev/null || install_tools
+if [ ! -d "bower_components" ]; then install_3rd_party; fi;
+
+############################################################
+# UTILITY
+############################################################
+
+fail ()
+{
+  local code=$?
+  printf "\nStopped by an error.\n";
+  exit $code
+}
+
+background_run ()
+{
+  $1 &
+  shutdown_script="${shutdown_script}kill $!;"
+}
+
+shutdown ()
+{
+echo "SHUTDOWN"
+echo $shutdown_script
+  eval $shutdown_script
+  unset shutdown_script
+}
+
+############################################################
+# MAIN
+############################################################
 
 if [ -z "$1" ]; then
   echo "Syntax:
-    $0 [--all] [--watch]
+    $0 target [--watch]
 
-    --all     Also (re)build customized Bootstrap
+    target    all  = Include 3rd party libraries in the build
+              main = Exclude 3rd party libraries from the build
     --watch   Automatically rebuild when changes are detected
 "
   exit 1
 fi
 
-echo -e "\nBuilding...\n"
-mkdir -p public/dist/components 2> /dev/null
+shutdown_script=""
+trap shutdown EXIT
 
-# CUSTOM BOOTSTRAP BUILD
-if [ "$1" == "--all" -o "$2" == "--all" ]; then
-  echo -e "\t◆ Customized Bootstrap build"
-  lessc -s resources/assets/less/bootstrap.less --source-map=public/dist/bootstrap.map --clean-css="--s1" public/dist/bootstrap.css
+echo
+init || fail
+
+if [ "$1" == "all" -o "$2" == "all" ]; then
+  build_3rd_party || fail
 fi
 
 if [ "$1" == "--watch" -o "$2" == "--watch" ]; then
-  echo -e "\nPress Enter/Return to stop.\n"
-  sass resources/assets/scss/components/sideBarMenu.scss public/dist/components/sideBarMenu.css --style compressed -E "UTF-8" &
-  P1=$!
-  sane 'echo "Building LESS...";\
-lessc -s resources/assets/less/theme.less --source-map=public/dist/theme.map --clean-css="--s1" public/dist/theme.css &&\
-echo "Done.\n"' resources/assets/less --glob='**/*.less' &
-  P2=$!
-  read
-  echo "Killing processes $P1 and $P2...";
-  kill $P1
-  kill $P2
-  echo -e "\nDone.\n"
-  exit 0
+  watch || fail
+  sleep 1
+  printf "\nPress Enter/Return to exit\n\n"
+  read -s
 else
-  echo -e "\t◆ SASS stylesheets"
-  sass resources/assets/scss/components/sideBarMenu.scss public/dist/components/sideBarMenu.css --style compressed -E "UTF-8" &&\
-  echo -e "\t◆ LESS stylesheets"
-  lessc -s resources/assets/less/theme.less --source-map=public/dist/theme.map --clean-css="--s1" public/dist/theme.css &&\
-  echo -e "\nDone.\n" &&\
-  exit 0
+  build_sass || fail
+  build_less || fail
+  echo
 fi
-exit $?
+printf "Done.\n"
