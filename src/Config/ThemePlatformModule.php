@@ -1,26 +1,35 @@
 <?php
 namespace Selenia\Themes\Platform\Config;
 
-use Electro\Core\Assembly\Services\ModuleServices;
+use Electro\Interfaces\KernelInterface;
 use Electro\Interfaces\ModuleInterface;
+use Electro\Kernel\Lib\ModuleInfo;
+use Electro\Plugins\Matisse\Config\MatisseSettings;
+use Electro\Profiles\WebProfile;
+use Electro\ViewEngine\Config\ViewEngineSettings;
 use Selenia\Themes\Platform\Components\SideBarMenu;
 
 class ThemePlatformModule implements ModuleInterface
 {
-  const PUBLIC_DIR = 'modules/selenia-modules/theme-platform';
-
-  function configure (ModuleServices $module)
+  static function getCompatibleProfiles ()
   {
-    $module
-      ->publishPublicDirAs (self::PUBLIC_DIR)
-      ->provideViews ()
-//      ->provideMacros ()
-      ->registerComponents ([
-        'SideBarMenu' => SideBarMenu::class,
-      ])
-      // DO NOT IMPORT THE FOLLOWING NAMESPACE!
-      ->registerControllersNamespace (\Selenia\Platform\Components::class, 'platform')
-    ;
+    return [WebProfile::class];
+  }
+
+  static function startUp (KernelInterface $kernel, ModuleInfo $moduleInfo)
+  {
+    $kernel->onConfigure (
+      function (MatisseSettings $matisseSettings, ViewEngineSettings $viewEngineSettings)
+      use ($moduleInfo) {
+        $matisseSettings
+//          ->registerMacros ($moduleInfo)
+          ->registerComponents ([
+            'SideBarMenu' => SideBarMenu::class,
+          ])
+          // DO NOT IMPORT THE FOLLOWING NAMESPACE!
+          ->registerControllersNamespace ($moduleInfo, \Selenia\Platform\Components::class, 'platform');
+        $viewEngineSettings->registerViews ($moduleInfo);
+      });
   }
 
 }
